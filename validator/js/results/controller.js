@@ -3,6 +3,7 @@ ngApp.controller('myValidatorController', function($scope) {
 	$scope.urlRealValidator = serverRealURL;
 	$scope.betaBanner = betaBanner;
 	$scope.labelStaging = labelStaging;
+	$scope.serverToken = serverToken;
 
 	// Show/Hide Beta banner
 	if ($scope.betaBanner == true) {
@@ -292,7 +293,7 @@ ngApp.controller('myValidatorController', function($scope) {
 				console.log(testSuiteId);
 				console.log(testObjectId);
 				var fileNameTestObjectId = testObjectId.replace("EID", "");
-				$.getJSON($scope.urlRealValidator + "TestObjects/" + fileNameTestObjectId + ".json", function(dataTestObject) {
+				$.getJSON($scope.urlValidator + "TestObjects/" + fileNameTestObjectId + ".json", function(dataTestObject) {
 					console.log(dataTestObject);
 					var uploadType = "";
 					if (dataTestObject.EtfItemCollection.testObjects.TestObject.hasOwnProperty('remoteResource')) {
@@ -419,7 +420,7 @@ ngApp.controller('myValidatorController', function($scope) {
 						$(document.body).css({
 							'cursor': 'wait'
 						});
-						$.ajax({
+						var requestJSON = {
 							type: "POST",
 							url: $scope.urlValidator + "TestRuns",
 							data: JSON.stringify(testRunRequest),
@@ -438,7 +439,9 @@ ngApp.controller('myValidatorController', function($scope) {
 								console.log(errMsg);
 								alert(JSON.stringify(errMsg));
 							}
-						});
+						};
+						if ($scope.serverToken != "") requestJSON.headers = { 'x-api-key': $scope.serverToken }
+						$.ajax(requestJSON);
 					} else {
 						location.href = "../test-rerun/index.html?parameters=" + encrypted;
 					}
@@ -665,12 +668,14 @@ ngApp.controller('myValidatorController', function($scope) {
 			if (testSuiteId == "EIDeec9d674-d94b-4d8d-b744-1309c6cae1d2") testSuiteDesc = "Conformance Class View Service WMS";
 			if (testSuiteId == "EID550ceacf-b3cb-47a0-b2dd-d3edb18344a9") testSuiteDesc = "Conformance Class View Service WMTS";
 			// DOWNLOAD SERVICE
-			if (testSuiteId == "EIDe51620af-bcf5-4719-ab0e-ef6226a572fa") testSuiteDesc = "Conformance Class Direct WFS";
-			if (testSuiteId == "EID18d66578-6ad6-3d3d-a090-0cf885c61de1") testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
+			if (testSuiteId == "EIDed2d3501-d700-4ff9-b9bf-070dece8ddbd") testSuiteDesc = "Conformance Class Direct WFS";
+			if (testSuiteId == "EID1104fc9f-a7af-3862-9bd1-9f02921103a2") testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
+			if (testSuiteId == "EID1104fc9f-a7af-3862-9bd1-9f02921103a2") testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
 			if (testSuiteId == "EID174edf55-699b-446c-968c-1892a4d8d5bd") testSuiteDesc = "Conformance Class Pre-defined WFS";
 			if (testSuiteId == "EID11571c92-3940-4f42-a6cd-5e2b1c6f4d93") testSuiteDesc = "Conformance Class Pre-defined Atom";
 			if (testSuiteId == "EID074570ad-d720-47b3-af79-d54201793404") testSuiteDesc = "Conformance Class Download Service WCS Core";
 			if (testSuiteId == "EID0ff73873-5601-41ff-8d92-3fb1fbba3cf2") testSuiteDesc = "Conformance Class Download Service Pre-defined SOS";
+			if (testSuiteId == "EID599648e9-316c-31ba-bae4-1a8668ce05fb") testSuiteDesc = "Conformance Class OGC API - Features";
 			// DISCOVERY SERVICE
 			if (testSuiteId == "EIDc837298f-a10e-42d1-88f2-f1415cbbb463") testSuiteDesc = "Conformance Class Discovery Service CSW";
 			// DATASET
@@ -892,13 +897,13 @@ ngApp.controller('myValidatorController', function($scope) {
 			if (testSuiteId == "EID2e792ebf-e98e-42d3-850d-80bbb0b568b9") testSuiteDesc = "Conformance class: 'GML application schemas, Agricultural and Aquaculture Facilities'";
 			if (testSuiteId == "EID36dec890-a302-442e-ae35-1edcfa5ca4dd") testSuiteDesc = "Conformance class: 'Information accessibility, Agricultural and Aquaculture Facilities'";
 			if (testSuiteId == "EID2d2491df-b01e-4527-a089-82d6ffa88a80") testSuiteDesc = "Conformance class: 'Reference systems, Agricultural and Aquaculture Facilities'";
-			
+
 			if (testSuiteId == "EID7bc56fcd-d29d-4a71-b6d1-c283e6b63b2c") testSuiteDesc = "Conformance Class 'GML application schemas, Atmospheric Conditions and Meteorological Geographical Features'";
 			if (testSuiteId == "EID850a0120-7637-4aef-84aa-5673832e518a") testSuiteDesc = "Conformance Class 'Application schema, Atmospheric Conditions and Meteorological Geographical Features'";
 			if (testSuiteId == "EID8736653c-eee8-4546-a802-ec62f1792262") testSuiteDesc = "Conformance Class 'Data consistency, Atmospheric Conditions and Meteorological Geographical Features'";
 			if (testSuiteId == "EIDac70176c-224c-47ea-864a-b53344a2dec8") testSuiteDesc = "Conformance Class 'Information accessibility, Atmospheric Conditions and Meteorological Geographical Features'";
 			if (testSuiteId == "EIDe714b79c-6219-4177-acb3-e01ac8f4549d") testSuiteDesc = "Conformance Class 'Reference systems, Atmospheric Conditions and Meteorological Geographical Features'";
-			
+
 			if (testSuiteId == "EID46af85e3-f8cc-4812-b8b7-36d99897084c") testSuiteDesc = "Conformance class: 'Application schema, Orthoimagery'";
 			if (testSuiteId == "EIDdd6d5c5f-6d38-45a1-b85d-b9f2606bff2d") testSuiteDesc = "Conformance class: 'Data consistency, Orthoimagery'";
 			if (testSuiteId == "EID2151146d-da46-4242-9471-0918db59abb5") testSuiteDesc = "Conformance class: 'GML application schemas, Orthoimagery'";

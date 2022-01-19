@@ -5,8 +5,9 @@ ngApp.controller('myValidatorController', function($scope) {
 	$scope.captchaEnabled = captchaEnabled;
 	$scope.betaBanner = betaBanner;
 	$scope.labelStaging = labelStaging;
-	$scope.apiKey = serverToken;
-	
+	$scope.serverToken = serverToken;
+	$scope.environment = environment;
+
 	$.ajaxSetup({
 		cache: false
 	});
@@ -148,17 +149,23 @@ ngApp.controller('myValidatorController', function($scope) {
 			if (($scope.select.typeResource == "viewservice") && ($scope.select.viewServiceType == "WTMS")) $scope.restservice.testsuiteid = "EID550ceacf-b3cb-47a0-b2dd-d3edb18344a9";
 		}
 		// DOWNLOAD SERVICE
+		$("#text-input-url").attr("placeholder", "http://example.service.url/context?service=[SERVICE]&request=GetCapabilities");
 		if ($scope.select.typeResource == "downloadservice") {
 			console.log($scope.select.typeResource);
 			console.log($scope.select.downloadServiceType);
 			console.log($scope.select.downloadSubServiceType);
 			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "WFS") && ($scope.select.downloadSubServiceType == "direct3")) $scope.restservice.testsuiteid = ["EIDed2d3501-d700-4ff9-b9bf-070dece8ddbd", "EID174edf55-699b-446c-968c-1892a4d8d5bd"];
 			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "WFS") && ($scope.select.downloadSubServiceType == "direct2")) $scope.restservice.testsuiteid = "EID174edf55-699b-446c-968c-1892a4d8d5bd";
-			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "WFS") && ($scope.select.downloadSubServiceType == "direct1")) $scope.restservice.testsuiteid = "EID18d66578-6ad6-3d3d-a090-0cf885c61de1";
+			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "WFS") && ($scope.select.downloadSubServiceType == "direct1") && ($scope.environment == "PROD")) $scope.restservice.testsuiteid = "EID1104fc9f-a7af-3862-9bd1-9f02921103a2";
+			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "WFS") && ($scope.select.downloadSubServiceType == "direct1") && ($scope.environment == "STAGING")) $scope.restservice.testsuiteid = "EID1104fc9f-a7af-3862-9bd1-9f02921103a2";
 			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "WFS") && ($scope.select.downloadSubServiceType == "predefined")) $scope.restservice.testsuiteid = "EID174edf55-699b-446c-968c-1892a4d8d5bd";
 			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "PDA")) $scope.restservice.testsuiteid = "EID11571c92-3940-4f42-a6cd-5e2b1c6f4d93";
 			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "WCS")) $scope.restservice.testsuiteid = "EID074570ad-d720-47b3-af79-d54201793404";
 			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "SOS")) $scope.restservice.testsuiteid = "EID0ff73873-5601-41ff-8d92-3fb1fbba3cf2";
+			if (($scope.select.typeResource == "downloadservice") && ($scope.select.downloadServiceType == "OGC")) {
+				$("#text-input-url").attr("placeholder", "http://example.service.url");
+				$scope.restservice.testsuiteid = "EID599648e9-316c-31ba-bae4-1a8668ce05fb";
+			}
 		}
 		// DISCOVERY SERVICE
 		if ($scope.select.typeResource == "discoveryservice") {
@@ -718,12 +725,14 @@ ngApp.controller('myValidatorController', function($scope) {
 		if (testSuiteId == "EIDa593a7ad-42d9-46d0-985d-9dff3e684428") testSuiteDesc = "Conformance Class 7: INSPIRE Harmonised Spatial Data Services metadata";
 		if (testSuiteId == "EIDeec9d674-d94b-4d8d-b744-1309c6cae1d2") testSuiteDesc = "Conformance Class View Service WMS";
 		if (testSuiteId == "EID550ceacf-b3cb-47a0-b2dd-d3edb18344a9") testSuiteDesc = "Conformance Class View Service WMTS";
-		if (testSuiteId == "EID18d66578-6ad6-3d3d-a090-0cf885c61de1") testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
+		if (testSuiteId == "EID1104fc9f-a7af-3862-9bd1-9f02921103a2") testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
+		if (testSuiteId == "EID1104fc9f-a7af-3862-9bd1-9f02921103a2") testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
 		if (testSuiteId == "EID174edf55-699b-446c-968c-1892a4d8d5bd") testSuiteDesc = "Conformance Class Pre-defined WFS";
-		if (testSuiteId == "EIDe51620af-bcf5-4719-ab0e-ef6226a572fa") testSuiteDesc = "Conformance Class Direct WFS";
+		if (testSuiteId == "EIDed2d3501-d700-4ff9-b9bf-070dece8ddbd") testSuiteDesc = "Conformance Class Direct WFS";
 		if (testSuiteId == "EID11571c92-3940-4f42-a6cd-5e2b1c6f4d93") testSuiteDesc = "Conformance Class Pre-defined Atom";
 		if (testSuiteId == "EID074570ad-d720-47b3-af79-d54201793404") testSuiteDesc = "Conformance Class Download Service WCS Core";
 		if (testSuiteId == "EID0ff73873-5601-41ff-8d92-3fb1fbba3cf2") testSuiteDesc = "Conformance Class Download Service Pre-defined SOS";
+		if (testSuiteId == "EID599648e9-316c-31ba-bae4-1a8668ce05fb") testSuiteDesc = "Conformance Class OGC API - Features";
 		if (testSuiteId == "EIDc837298f-a10e-42d1-88f2-f1415cbbb463") testSuiteDesc = "Conformance Class Discovery Service CSW";
 		if (testSuiteId == "EID545f9e49-009b-4114-9333-7ca26413b5d4") testSuiteDesc = "Conformance Class INSPIRE GML encoding";
 		if (testSuiteId == "EID61070ae8-13cb-4303-a340-72c8b877b00a") testSuiteDesc = "Conformance Class Data consistency";
@@ -748,12 +757,14 @@ ngApp.controller('myValidatorController', function($scope) {
 			if (testSuiteId.includes("EIDa593a7ad-42d9-46d0-985d-9dff3e684428")) testSuiteDesc = "Conformance Class 7: INSPIRE Harmonised Spatial Data Services metadata";
 			if (testSuiteId.includes("EIDeec9d674-d94b-4d8d-b744-1309c6cae1d2")) testSuiteDesc = "Conformance Class View Service WMS";
 			if (testSuiteId.includes("EID550ceacf-b3cb-47a0-b2dd-d3edb18344a9")) testSuiteDesc = "Conformance Class View Service WMTS";
-			if (testSuiteId.includes("EID18d66578-6ad6-3d3d-a090-0cf885c61de1")) testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
+			if (testSuiteId.includes("EID1104fc9f-a7af-3862-9bd1-9f02921103a2")) testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
+			if (testSuiteId.includes("EID1104fc9f-a7af-3862-9bd1-9f02921103a2")) testSuiteDesc = "WFS 2.0 (OGC 09-025r2/ISO 19142) Conformance Test Suite";
 			if (testSuiteId.includes("EID174edf55-699b-446c-968c-1892a4d8d5bd")) testSuiteDesc = "Conformance Class Pre-defined WFS";
-			if (testSuiteId.includes("EIDe51620af-bcf5-4719-ab0e-ef6226a572fa")) testSuiteDesc = "Conformance Class Direct WFS";
+			if (testSuiteId.includes("EIDed2d3501-d700-4ff9-b9bf-070dece8ddbd")) testSuiteDesc = "Conformance Class Direct WFS";
 			if (testSuiteId.includes("EID11571c92-3940-4f42-a6cd-5e2b1c6f4d93")) testSuiteDesc = "Conformance Class Pre-defined Atom";
 			if (testSuiteId.includes("EID074570ad-d720-47b3-af79-d54201793404")) testSuiteDesc = "Conformance Class Download Service WCS Core";
 			if (testSuiteId.includes("EID0ff73873-5601-41ff-8d92-3fb1fbba3cf2")) testSuiteDesc = "Conformance Class Download Service Pre-defined SOS";
+			if (testSuiteId.includes("EID599648e9-316c-31ba-bae4-1a8668ce05fb")) testSuiteDesc = "Conformance Class OGC API - Features";
 			if (testSuiteId.includes("EIDc837298f-a10e-42d1-88f2-f1415cbbb463")) testSuiteDesc = "Conformance Class Discovery Service CSW";
 			if (testSuiteId.includes("EID545f9e49-009b-4114-9333-7ca26413b5d4")) testSuiteDesc = "Conformance Class INSPIRE GML encoding";
 			if (testSuiteId.includes("EID61070ae8-13cb-4303-a340-72c8b877b00a")) testSuiteDesc = "Conformance Class Data consistency";
@@ -1607,6 +1618,7 @@ ngApp.controller('myValidatorController', function($scope) {
 		if (downloadServiceType == "PDA") $("#downloadservice-pda-options-1").prop("checked", true); // ........
 		if (downloadServiceType == "SOS") $("#downloadservice-sos-options-1").prop("checked", true);
 		if (downloadServiceType == "WCS") $("#downloadservice-wcs-options-1").prop("checked", true);
+		if (downloadServiceType == "OGC") $("#downloadservice-ogc-options-1").prop("checked", true);
 		$scope.prefillLabel();
 	}
 
@@ -1647,6 +1659,7 @@ ngApp.controller('myValidatorController', function($scope) {
 		if (type == 'pda') $("#downloadservice-pda-options-1").prop("checked", true);
 		if (type == 'sos') $("#downloadservice-sos-options-1").prop("checked", true);
 		if (type == 'wcs') $("#downloadservice-wcs-options-1").prop("checked", true);
+		if (type == 'ogc') $("#downloadservice-ogc-options-1").prop("checked", true);
 		$scope.prefillLabel();
 	}
 
@@ -6692,13 +6705,12 @@ $scope.sendRunRequest = function() {
 			$(document.body).css({
 				'cursor': 'wait'
 			});
-			$.ajax({
+			var requestJSON = {
 				type: "POST",
 				url: $scope.urlValidator + "TestRuns",
 				data: JSON.stringify(testRunRequest),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
-				headers: {"x-api-key":$scope.apiKey},
 				success: function(data) {
 					console.log(data);
 					console.log(data.EtfItemCollection.testRuns.TestRun.id);
@@ -6718,7 +6730,9 @@ $scope.sendRunRequest = function() {
 					}, 2500).fadeOut(12000);
 					progress(12, 12, $('#progressBar3'));
 				}
-			});
+			};
+			if ($scope.serverToken != "") requestJSON.headers = { 'x-api-key': $scope.serverToken }
+			$.ajax(requestJSON);
 		}
 	}
 

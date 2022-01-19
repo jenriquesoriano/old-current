@@ -1,6 +1,7 @@
 var captchaEnabled = true;
 var betaBanner = false;
 var labelStaging = false;
+var environment = "PROD";
 // PROD
 var serverURL = "https://inspire.ec.europa.eu/validator/v2/";
 var serverRealURL = "https://inspire.ec.europa.eu/validator/v2/";
@@ -21,3 +22,5 @@ var serverToken = "BQIAJulY249NyeiT6gsfc9AUTCa8Nkgi72J9jIVP";
 //var serverRealURL = "http://inspire-validator.eu-west-1.elasticbeanstalk.com/validator/v2/";
 //var serverCaptchaURL = "http://inspire-validator.eu-west-1.elasticbeanstalk.com/validator/captcha/verify.php";
 //var serverToken = "";
+
+
